@@ -1,56 +1,40 @@
-﻿using ExpenseTracker; // Import your namespace
+﻿using ExpenseTracker;
 
-// 1. Initialize a List with dummy data
-// (Collection Initializer syntax - very clean!)
-var expenses = new List<Expense>
+Console.WriteLine("1. App Started.");
+
+// --- CALLING THE ASYNC METHOD ---
+
+// Notice the 'await' keyword. 
+// This tells C#: "Pause this method here, go do other work if needed, 
+// and come back when FetchExpensesAsync is finished."
+Console.WriteLine("2. Fetching data from database...");
+List<Expense> data = await FetchExpensesAsync(); 
+
+Console.WriteLine($"4. Data received! Count: {data.Count}");
+
+// Process the data using LINQ (Day 2 knowledge)
+var total = data.Sum(x => x.Amount);
+Console.WriteLine($"5. Total Amount: ${total}");
+
+
+// --- THE ASYNC METHOD DEFINITION ---
+
+// 1. 'async' keyword: Enables the use of 'await' inside.
+// 2. 'Task<List<Expense>>': Returns a Task that eventually produces a List.
+//    (If this method returned nothing, we would use 'Task' instead of 'void')
+async Task<List<Expense>> FetchExpensesAsync()
 {
-    new Expense { Id = 1, Description = "Lunch Sandwich", Amount = 12.50m, Category = "Food", Date = DateTime.Now.AddDays(-1) },
-    new Expense { Id = 2, Description = "Uber Ride", Amount = 45.00m, Category = "Transport", Date = DateTime.Now },
-    new Expense { Id = 3, Description = "Office Monitor", Amount = 250.00m, Category = "Tech", Date = DateTime.Now.AddDays(-5) },
-    new Expense { Id = 4, Description = "Coffee", Amount = 5.00m, Category = "Food", Date = DateTime.Now },
-    new Expense { Id = 5, Description = "Monthly Train Pass", Amount = 80.00m, Category = "Transport", Date = DateTime.Now.AddDays(-2) }
-};
+    // Simulate a slow database call (1 second delay)
+    // unlike Thread.Sleep(), this does NOT freeze the computer. 
+    // It releases the thread to handle other requests while waiting.
+    await Task.Delay(2000); 
 
-Console.WriteLine($"Total Expenses loaded: {expenses.Count}");
-Console.WriteLine("------------------------------------------------");
+    Console.WriteLine("3. (Inside Database Method) Data retrieved.");
 
-// --- TASK 1: Find expenses > $50 ---
-// Java: expenses.stream().filter(e -> e.getAmount() > 50).collect(Collectors.toList());
-var expensiveItems = expenses.Where(e => e.Amount > 50).ToList();
-
-Console.WriteLine("Expensive Items (> $50):");
-foreach (var item in expensiveItems)
-{
-    Console.WriteLine($" - {item.Description}: ${item.Amount}");
-}
-
-Console.WriteLine("------------------------------------------------");
-
-// --- TASK 2: Get just the names (Description) of "Food" expenses ---
-// Java: .filter(...).map(e -> e.getDescription())...
-var foodNames = expenses
-    .Where(e => e.Category == "Food")
-    .Select(e => e.Description) // 'Select' is C# for 'Map'
-    .ToList();
-
-Console.WriteLine("Food Items:");
-// string.Join is a quick way to print a list (Java has String.join too)
-Console.WriteLine(string.Join(", ", foodNames));
-
-Console.WriteLine("------------------------------------------------");
-
-// --- TASK 3: Calculate the total sum ---
-// Java: .mapToDouble(e -> e.getAmount()).sum();
-var totalSpent = expenses.Sum(e => e.Amount);
-
-Console.WriteLine($"Total Spent: ${totalSpent}");
-
-// --- BONUS: FirstOrDefault ---
-// Finds the first item that matches, or returns null if not found.
-// Java: .filter(...).findFirst().orElse(null);
-var firstTransport = expenses.FirstOrDefault(e => e.Category == "Transport");
-
-if (firstTransport != null)
-{
-    Console.WriteLine($"First transport item found: {firstTransport.Description}");
+    // Return dummy data
+    return new List<Expense>
+    {
+        new Expense { Id = 1, Description = "Grocery", Amount = 50, Category = "Food", Date = DateTime.Now },
+        new Expense { Id = 2, Description = "Gas", Amount = 40, Category = "Transport", Date = DateTime.Now }
+    };
 }
