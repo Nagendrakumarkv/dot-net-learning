@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "HhjQkYSk9W8Yri6mFgx4H2uBoYKeLsXeh1CEkg2Su5k=",
+  "Hash": "ZQiRK/SNfmgBmlBbZlfsGTBz94F7KeAnLaHop/tOJfw=",
   "Source": "ExpenseTrackerApi",
   "BasePath": "_content/ExpenseTrackerApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "ExpenseTrackerApi\\wwwroot",
+      "Source": "ExpenseTrackerApi",
+      "ContentRoot": "D:\\dot-net\\dot-net-learning\\ExpenseTrackerApi\\wwwroot\\",
+      "BasePath": "_content/ExpenseTrackerApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\dot-net\\dot-net-learning\\ExpenseTrackerApi\\wwwroot\\index.html",
+      "SourceId": "ExpenseTrackerApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\dot-net\\dot-net-learning\\ExpenseTrackerApi\\wwwroot\\",
+      "BasePath": "_content/ExpenseTrackerApi",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ]
 }

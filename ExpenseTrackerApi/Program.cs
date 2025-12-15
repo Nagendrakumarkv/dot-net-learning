@@ -37,6 +37,12 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExpenseTrackerApi.Middlewares.GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
+
+// --- ADD THESE TWO LINES ---
+app.UseDefaultFiles(); // Finds 'index.html' automatically
+app.UseStaticFiles();  // Enables serving files from 'wwwroot' folder
+// ---------------------------
+
 app.UseAuthorization();
 app.MapControllers();
 
