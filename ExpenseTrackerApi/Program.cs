@@ -31,6 +31,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+// 2. OUR CUSTOM ERROR HANDLER
+// (Catches errors from everything below it)
+app.UseMiddleware<ExpenseTrackerApi.Middlewares.GlobalExceptionMiddleware>();
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

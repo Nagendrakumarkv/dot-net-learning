@@ -38,4 +38,10 @@ public class ExpenseController : ControllerBase
         _expenseService.Add(newExpense);
         return CreatedAtAction(nameof(GetById), new { id = newExpense.Id }, newExpense);
     }
+
+    [HttpGet("error")]
+    public IActionResult TriggerError()
+    {
+        throw new Exception("This is a fake crash for testing!");
+    }
 }

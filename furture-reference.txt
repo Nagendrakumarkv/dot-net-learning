@@ -177,3 +177,57 @@ Add a middleware that catches any crash in the app and returns a nice JSON error
 Test the full flow: Add Expense -> Save to DB -> Retrieve via API.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commands Lists
+
+1. Project Setup (Day 1 & 4)
+
+Command	                      Description
+dotnet --version	      Checks if .NET SDK is installed.
+dotnet new console -n MyApp   Creates a basic Console Application (Day 1).
+dotnet new webapi -n MyApi    Creates a Web API project (Day 4).
+dotnet new sln	              Creates a Solution file (optional, for managing multiple projects).
+dotnet run	              Compiles and runs the application.
+dotnet build	              Compiles the code to check for errors (without running it).
+
+2. Database & Entity Framework (Day 6)
+
+Prerequisite: You must be inside the project folder.
+
+Command,                                                           Description
+
+Tools Installation,
+
+dotnet tool install --global dotnet-ef,                            Installs the EF Core command-line tools globally.
+dotnet restore,                                                    Refreshes all dependencies (useful if dotnet build fails).
+
+Package Management,
+
+dotnet add package [PackageName],                                  Adds a NuGet library to your project.
+Example: dotnet add package Microsoft.EntityFrameworkCore.Sqlite,  Adds SQLite support.
+Example: dotnet remove package [PackageName],                      Removes a package.
+
+Migrations (Database Updates),
+
+dotnet ef migrations add InitialCreate,                            Scans your code and generates the SQL/logic to create tables.
+dotnet ef database update,                                         Applies the migration logic to the actual database file/server.
+
+3. Common NuGet Packages (Dependencies)
+
+These are the specific libraries we installed for the ExpenseTrackerApi:
+
+# 1. The Database Provider (Choose ONE)
+
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+# OR
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+# 2. The Tools (Required for 'dotnet ef' commands)
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+Your "Nuclear" Fix Command
+If your project ever acts weird or says packages are missing, run this sequence:
+
+dotnet nuget locals all --clear  # Clears cache
+dotnet restore                   # Re-downloads packages
+dotnet build                     # Re-compiles
