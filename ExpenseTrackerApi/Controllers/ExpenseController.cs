@@ -1,49 +1,41 @@
-using Microsoft.AspNetCore.Mvc; // equivalent to org.springframework.web.bind.annotation...
+using Microsoft.AspNetCore.Mvc;
+using ExpenseTrackerApi.Services; // Import the namespace
 
 namespace ExpenseTrackerApi.Controllers;
 
-[ApiController] // Says "This is a REST controller" (validates JSON, etc.)
-[Route("api/[controller]")] // URL will be: localhost:xxxx/api/expense
+[ApiController]
+[Route("api/[controller]")]
 public class ExpenseController : ControllerBase
 {
-    // Simulating a Database (static so it persists across requests)
-    private static List<Expense> _expenses = new List<Expense>
-    {
-        new Expense { Id = 1, Description = "Lunch", Amount = 15.50m },
-        new Expense { Id = 2, Description = "Bus Ticket", Amount = 2.50m }
-    };
+    // 1. Define a private field for the service
+    private readonly IExpenseService _expenseService;
 
-    // GET: api/expense
+    // 2. Constructor Injection (No @Autowired needed!)
+    // The container sees IExpenseService and automatically passes the 'ExpenseService' we registered.
+    public ExpenseController(IExpenseService expenseService)
+    {
+        _expenseService = expenseService;
+    }
+
     [HttpGet]
     public ActionResult<List<Expense>> GetAll()
     {
-        // In Spring: return ResponseEntity.ok(list);
-        return Ok(_expenses);
+        // Use the service
+        return Ok(_expenseService.GetAll());
     }
 
-    // GET: api/expense/{id}
     [HttpGet("{id}")]
     public ActionResult<Expense> GetById(int id)
     {
-        var expense = _expenses.FirstOrDefault(e => e.Id == id);
-        
-        if (expense == null)
-        {
-            return NotFound(); // Returns 404
-        }
-        
-        return Ok(expense); // Returns 200 with data
+        var expense = _expenseService.GetById(id);
+        if (expense == null) return NotFound();
+        return Ok(expense);
     }
 
-    // POST: api/expense
     [HttpPost]
     public ActionResult<Expense> Create([FromBody] Expense newExpense)
     {
-        // Assign a fake ID
-        newExpense.Id = _expenses.Max(e => e.Id) + 1;
-        _expenses.Add(newExpense);
-
-        // Returns 201 Created with a header pointing to the GET endpoint
+        _expenseService.Add(newExpense);
         return CreatedAtAction(nameof(GetById), new { id = newExpense.Id }, newExpense);
     }
 }
