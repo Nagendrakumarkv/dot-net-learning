@@ -1,0 +1,14 @@
+D:\dot-net\dot-net-learning\ExpenseTracker\bin\Debug\net8.0\ExpenseTracker.exe
+D:\dot-net\dot-net-learning\ExpenseTracker\bin\Debug\net8.0\ExpenseTracker.deps.json
+D:\dot-net\dot-net-learning\ExpenseTracker\bin\Debug\net8.0\ExpenseTracker.runtimeconfig.json
+D:\dot-net\dot-net-learning\ExpenseTracker\bin\Debug\net8.0\ExpenseTracker.dll
+D:\dot-net\dot-net-learning\ExpenseTracker\bin\Debug\net8.0\ExpenseTracker.pdb
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ExpenseTracker.GeneratedMSBuildEditorConfig.editorconfig
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ExpenseTracker.AssemblyInfoInputs.cache
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ExpenseTracker.AssemblyInfo.cs
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ExpenseTracker.csproj.CoreCompileInputs.cache
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ExpenseTracker.dll
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\refint\ExpenseTracker.dll
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ExpenseTracker.pdb
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ExpenseTracker.genruntimeconfig.cache
+D:\dot-net\dot-net-learning\ExpenseTracker\obj\Debug\net8.0\ref\ExpenseTracker.dll

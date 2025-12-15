@@ -1,0 +1,179 @@
+This is the best way to learn: Fast-paced and Project-based. Since you already know Java/Spring, we will skip the "programming basics" and focus entirely on the syntax differences and the .NET Ecosystem.
+
+The Project: "Personal Expense Tracker API"
+We will build a REST API where users can add expenses, categorize them, and get reports (e.g., "How much did I spend on Food?").
+
+Tech Stack: C# 12, .NET 8, ASP.NET Core Web API, Entity Framework Core (Database), SQL Server (LocalDB).
+
+Day 1: The Syntax Shift (Properties & The "C# Way")
+Goal: Stop writing Java code in C# files. Learn the syntax shortcuts.
+
+Key Concepts:
+
+Top-level statements: (No public static void main needed anymore).
+
+Properties: No more getVariable() or setVariable().
+
+String Interpolation: Using $ instead of +.
+
+Nullables: string? vs string.
+
+Java vs C# Mapping:
+
+System.out.println -> Console.WriteLine
+
+final -> readonly or const
+
+extends -> : (colon)
+
+implements -> : (colon)
+
+Project Task:
+
+Install Visual Studio Community (ensure "ASP.NET and web development" workload is checked).
+
+Create a simple Console App.
+
+Create a class Expense with properties: Id, Description, Amount, Category, Date.
+
+Note: Use { get; set; } syntax.
+
+Day 2: Collections & LINQ (The "Wow" Factor)
+Goal: Master LINQ. This is C#'s version of Java Streams, but arguably cleaner.
+
+Key Concepts:
+
+List<T> and IEnumerable<T>.
+
+LINQ Methods: .Where(), .Select(), .OrderBy(), .FirstOrDefault().
+
+Lambda Syntax: x => x.Amount > 100 (identical to Java).
+
+Java Comparison:
+
+Java: list.stream().filter(x -> x > 5).collect(Collectors.toList())
+
+C#: list.Where(x => x > 5).ToList()
+
+Project Task:
+
+In your Console App, create a List<Expense> with dummy data.
+
+Write LINQ queries to:
+
+Find all expenses > $50.
+
+Get just the names of "Food" expenses.
+
+Calculate the total sum.
+
+Day 3: Async/Await (Concurrency)
+Goal: Understanding non-blocking code. .NET relies heavily on this.
+
+Key Concepts:
+
+Task and Task<T> (Similar to Java's CompletableFuture).
+
+The async and await keywords.
+
+Why you must propagate async all the way up the chain.
+
+Project Task:
+
+Simulate a database call. Create a method FetchExpensesAsync() that uses await Task.Delay(1000) to simulate lag.
+
+Call this from your main method and wait for it.
+
+Day 4: The Web Framework (ASP.NET Core)
+Goal: Building the actual API structure. This corresponds to the "Controller" layer in Spring Boot.
+
+Key Concepts:
+
+Program.cs (The entry point and configuration hub).
+
+Controllers & Attributes ([HttpGet], [HttpPost]).
+
+DTOs (Data Transfer Objects): Why we don't return Database Entities directly.
+
+Java Comparison:
+
+@RestController -> [ApiController]
+
+@RequestMapping -> [Route(...)]
+
+@PathVariable -> [FromRoute]
+
+Project Task:
+
+Create a new project: dotnet new webapi -n ExpenseTracker.
+
+Create an ExpenseController.
+
+Create endpoints to Get all expenses and Post a new expense (using an in-memory List for now).
+
+Day 5: Dependency Injection & Services
+Goal: Decoupling logic. Moving code out of the Controller.
+
+Key Concepts:
+
+Interfaces (IExpenseService).
+
+Service Lifetime: Transient (new every time), Scoped (per HTTP request), Singleton (created once).
+
+Registering services in the DI container (builder.Services.AddScoped<...>).
+
+Java Comparison:
+
+@Service / @Autowired -> Explicit registration in Program.cs and Constructor Injection.
+
+Project Task:
+
+Create IExpenseService and ExpenseService.
+
+Move your List logic from the Controller to the Service.
+
+Inject the Service into the Controller using the constructor.
+
+Day 6: Database Access (Entity Framework Core)
+Goal: Connecting to a real SQL database. Equivalent to Spring Data JPA / Hibernate.
+
+Key Concepts:
+
+DbContext: The bridge to the DB.
+
+DbSet: Represents a table.
+
+Migrations: Generating SQL from C# classes (dotnet ef migrations add InitialCreate).
+
+Java Comparison:
+
+JpaRepository -> DbContext methods (context.Expenses.Add(...)).
+
+application.properties -> appsettings.json.
+
+Project Task:
+
+Install NuGet packages: Microsoft.EntityFrameworkCore.SqlServer and Microsoft.EntityFrameworkCore.Tools.
+
+Configure the connection string in appsettings.json.
+
+Run the migration to create the database.
+
+Update your Service to save/read from the DB instead of the List.
+
+Day 7: Error Handling & Polish
+Goal: Middleware and clean responses.
+
+Key Concepts:
+
+Middleware: The pipeline request passes through (Auth, Logging, Global Exception Handling).
+
+Global Exception Handler (replacing Spring's @ControllerAdvice).
+
+Project Task:
+
+Add a middleware that catches any crash in the app and returns a nice JSON error message instead of a stack trace.
+
+Test the full flow: Add Expense -> Save to DB -> Retrieve via API.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
