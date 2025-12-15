@@ -1,31 +1,38 @@
-using ExpenseTrackerApi;
+using ExpenseTrackerApi.Data;
+using Microsoft.EntityFrameworkCore; // For ToListAsync if needed, though standard Linq works
 
 namespace ExpenseTrackerApi.Services;
 
 public class ExpenseService : IExpenseService
 {
-    // Keeping data in memory
-    private readonly List<Expense> _expenses = new(); 
+    private readonly AppDbContext _context;
 
-    public ExpenseService()
+    // Inject the DbContext
+    public ExpenseService(AppDbContext context)
     {
-        // Seed some data so it's not empty
-        _expenses.Add(new Expense { Id = 1, Description = "Service Lunch", Amount = 20.00m });
+        _context = context;
     }
 
     public List<Expense> GetAll()
     {
-        return _expenses;
+        // SQL translation: SELECT * FROM Expenses
+        return _context.Expenses.ToList();
     }
 
     public Expense? GetById(int id)
     {
-        return _expenses.FirstOrDefault(e => e.Id == id);
+        // SQL translation: SELECT TOP 1 * FROM Expenses WHERE Id = @id
+        return _context.Expenses.FirstOrDefault(e => e.Id == id);
     }
 
     public void Add(Expense expense)
     {
-        expense.Id = _expenses.Any() ? _expenses.Max(e => e.Id) + 1 : 1;
-        _expenses.Add(expense);
+        // 1. Add to the local tracking
+        _context.Expenses.Add(expense);
+        
+        // 2. Commit changes to the database (Generates the INSERT SQL)
+        // In JPA, this sometimes happens automatically at end of transaction.
+        // In EF Core, you must call SaveChanges().
+        _context.SaveChanges();
     }
 }

@@ -1,20 +1,25 @@
-using ExpenseTrackerApi.Controllers; // (Optional depending on namespace)
+using Microsoft.EntityFrameworkCore; // <--- THIS is the key line you were missing!
+using ExpenseTrackerApi.Data;
 using ExpenseTrackerApi.Services;
+using ExpenseTrackerApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // --- 1. Add services to the container ---
 
-// IMPORTANT: This line registers the Controller architecture (like Spring MVC)
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// --- REGISTER SERVICES HERE ---
-// We use Singleton today because we are storing data in a List variable inside the class.
-// If we used AddScoped, the list would reset to empty on every single request!
-builder.Services.AddSingleton<IExpenseService, ExpenseService>();
+// Get connection string
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Register Database
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(connectionString));
+
+// Register Service (Scoped because it uses the Database)
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
 
 var app = builder.Build();
 
@@ -27,10 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-// IMPORTANT: This line tells the app to find your [Route] attributes in the Controllers folder
 app.MapControllers();
 
 app.Run();
